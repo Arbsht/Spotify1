@@ -16,7 +16,8 @@ sp_oauth = SpotifyOAuth(
     client_id='0',
     client_secret='0',
     redirect_uri='http://127.0.0.1:5000/callback',
-    scope="user-read-private" #permessi x informazioni dell'utente
+    scope="user-read-private", #permessi x informazioni dell'utente
+    show_dialog=True
 )
 
 @app.route('/')
@@ -31,6 +32,11 @@ def callback():
     session['token_info'] = token_info #salvo il token nella mia sessione x riutilizzarlo
     return redirect(url_for('home'))
 
+@app.route('/logout')
+def logout():
+    session.clear() #cancelliamo l'access token salvato in session
+    return redirect(url_for('login'))
+
 @app.route('/home') 
 def home():
     token_info = session.get('token_info', None) #recupero token sissione (salvato prima)
@@ -38,8 +44,19 @@ def home():
         return redirect(url_for('login'))
     sp = spotipy.Spotify(auth=token_info['access_token']) #usiamo il token per ottenere i dati del profilo
     user_info = sp.current_user()
+    playlists = sp.current_user_playlists(limit=50)
+    playlists_info = playlists['items']
+    print("Playlist:")
+    print(playlists)
+    print("USER:")
     print(user_info) #capiamo la struttura di user_info per usarle nel frontend
-    return render_template('home.html', user_info=user_info) #passo le info utente all'home.html    
+    return render_template('home.html', user_info=user_info, playlists=playlists_info) #passo le info utente all'home.html 
+
+@app.route('/playlist/<id>')
+def playlist():
+    return render_template('playlist.html', id = id)
+
+
 
 if __name__ == '__main__': #debug
     app.run(debug=True)
