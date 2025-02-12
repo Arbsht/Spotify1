@@ -1,3 +1,30 @@
 <html>
-    {{ id }}
+    <a href="{{ url_for ('home')}}">Ritorna</a>
+    <h1>
+    {{ playlist['name'] }}
+</h1>
+<img src="{{ playlist['images'][0]['url'] }}" alt="Jacket playlist" height="100">
+<table>
+    <thead>
+        <tr>
+            <th>Titolo</th>
+            <th>Artista</th>
+            <th>Album</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for t in tracks['items'] %}
+        
+        <tr>
+        <td style="width: 40ch;"><br>{{ t['track']['name'] }}</td>
+        <td style="width: 40ch;"><br>
+            {% for a in t['track']['artists'] %}
+            {{a['name']}}
+            {% endfor %}
+        </td>
+        <td style="width: 40ch;"><br>{{ t['track']['album']['name']}} </td>
+    </tr>
+        {% endfor %}
+    </tbody>
+</table>
 </html>

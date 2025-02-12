@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Benvenuto, {{ user_info['display_name'] }}!</h1>
-    <a href="{{ url_for ('logout')}}">esci</a>
+    <a href="{{ url_for ('auth.logout')}}">esci</a>
     <br>
     {% if user_info['images'] %}
     <img src="{{ user_info['images'][0]['url'] }}" width="200">
