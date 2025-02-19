@@ -11,7 +11,7 @@
     {% if user_info['images'] %}
     <img src="{{ user_info['images'][0]['url'] }}" width="200">
     {% endif %}
-
+    <form action="/cerca" method="post"><input type="text" placeholder="Cerca" required name="cerca"><button type="submit">cerca</button></form>
     <h2>Le tue playlist: </h2>
     {% if playlists %}
     <table>
