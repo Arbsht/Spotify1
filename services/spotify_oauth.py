@@ -4,7 +4,7 @@ from spotipy.oauth2 import SpotifyOAuth
 #oggi leak di chiavi api
 sp_oauth = SpotifyOAuth(
     client_id='486292e9ce954bab9887cd9ffba68664',
-    client_secret='7a8214985e004e9d8928bd9ba0f4ff0a',
+    client_secret='8b11368619c4492eb9df6b08cefa9db4',
     redirect_uri='https://5000-arbsht-spotify1-c6seb8y5yf8.ws-eu117.gitpod.io/callback',
     scope="user-read-private", #permessi x informazioni dell'utente
     show_dialog=True

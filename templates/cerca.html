@@ -1,1 +1,27 @@
-<h1>ancora da fare però funziona</h1>
+<h1>Ricerca di : {{query}}</h1>
+<table>
+    <thead>
+        <tr>
+            <th>|Nome playlist|</th>
+            <th>|Numero brani|</th>
+            <th>|Jacket|</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for p in risultato['playlists']['items']%}
+        {% if p is not none %}
+        <tr>
+            <td>{{ p['name'] }}</td>
+            <td>{{ p['tracks']['total'] }}</td> 
+            <td>
+                {% if p['images'] %}
+                <img src="{{ p['images'][0]['url']}}" width="50" alt="Jacket playlist">
+                {% else %}
+                <p>no jacket</p>
+                {% endif %}
+            </td>
+            <td><a href="/playlist/{{ p['id'] }}">Visualizza</a>
+                {% endif %}
+        {% endfor %}
+    </tbody>
+</table>

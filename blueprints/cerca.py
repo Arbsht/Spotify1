@@ -10,5 +10,5 @@ def cerca():
         return redirect(url_for('auth.login'))
     sp = spotipy.Spotify(auth=token_info['access_token'])
     query = request.form['cerca']
-    risultato = sp.search(q = query, type='playlist')
-    return render_template('cerca.html', risultato = risultato)
+    risultato = sp.search(q = query, type='playlist', limit=20)
+    return render_template('cerca.html', risultato = risultato, query = query)

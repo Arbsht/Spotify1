@@ -22,4 +22,5 @@ def callback():
 @auth_bp.route('/logout')
 def logout():
     session.clear() #cancelliamo l'access token salvato in session
+    
     return redirect(url_for('auth.blank'))
