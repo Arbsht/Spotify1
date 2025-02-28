@@ -1,0 +1,23 @@
+<html>
+    <a href="{{ url_for ('home.home')}}">Ritorna alla home</a>
+    <h1>
+    {{ track['track']['name'] }}
+</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Artista</th>
+            <th>Album</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{% for a in track['track']['artists'] %}
+                {{a['name']}}
+                {% endfor %} |</td>
+                <td>| {{ track['track']['album']['name'] }}</td>
+        </tr>
+    </tbody>
+</table>
+<a href="/playlist/{{ id }}/random">Rirolla</a>
+</html>

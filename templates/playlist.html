@@ -1,9 +1,19 @@
-<html>
-    <a href="{{ url_for ('home.home')}}">Ritorna</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GAMK</title>
+        <!-- Collegamento al file CSS separato -->
+        <link rel="stylesheet" href="static/css/style.css">
+</head>
+    <body id="body">
+    <a href="{{ url_for ('home.home')}}">Ritorna alla home</a>
     <h1>
     {{ playlist['name'] }}
 </h1>
-<img src="{{ playlist['images'][0]['url'] }}" alt="Jacket playlist" height="100">
+<img src="{{ playlist['images'][0]['url'] }}" alt="Jacket playlist" height="100"><br>
+<a href="/playlist/{{ id }}/random">Prendi una canzone a caso</a>
 <table>
     <thead>
         <tr>
@@ -14,7 +24,6 @@
     </thead>
     <tbody>
         {% for t in tracks['items'] %}
-        
         <tr>
         <td style="width: 40ch;"><br>{{ t['track']['name'] }}</td>
         <td style="width: 40ch;"><br>
@@ -27,4 +36,5 @@
         {% endfor %}
     </tbody>
 </table>
+</body>
 </html>

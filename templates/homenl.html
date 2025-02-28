@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify - Homepage</title>
+    <title>GAMK</title>
     <!-- Collegamento al file CSS separato -->
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
     <!-- Barra di ricerca -->
     <div class="search-container">
-        <input type="text" id="search" placeholder="Cerca la tua musica..." />
-        <button id="search-btn">🔍</button>
+        <form action="/cerca" method="post"><input type="text" placeholder="Cerca" required name="cerca"><button type="submit">cerca</button></form>
     </div>
 
     <!-- Bottone Login -->
@@ -19,27 +18,7 @@
     
     <div class="container">
         <h1>Benvenuto su GAMK</h1>
-        <p>Ascolta subito la nostra Top 50 mondiale, senza login!</p>
-        <button id="try-btn" onclick="playTop50()">Prova Ora</button>
+        <p>Non so cosa mettere qui</p>
     </div>
-
-    <script>
-        function playTop50() {
-            alert("La Top 50 mondiale sta iniziando a suonare!");
-            // Qui potresti aggiungere il codice per far partire una playlist di esempio
-            // Es. window.location.href = "https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF";
-        }
-
-        // Funzione di ricerca
-        document.getElementById('search-btn').addEventListener('click', function() {
-            const query = document.getElementById('search').value;
-            if(query) {
-                alert("Hai cercato: " + query);
-                // Qui potresti aggiungere la logica per fare una ricerca effettiva
-                // Ad esempio, redirigere a una pagina di risultati:
-                // window.location.href = "https://www.spotify.com/search?q=" + encodeURIComponent(query);
-            }
-        });
-    </script>
 </body>
 </html>

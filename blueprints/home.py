@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, session, redirect, url_for
 import spotipy
 
+from services.spotify_oauth import *
+
 home_bp = Blueprint('home', __name__)
 
 @home_bp.route('/home') 
@@ -22,11 +24,12 @@ def home():
 def playlist(id):
     token_info = session.get('token_info', None) #recupero token sissione (salvato prima)
     if not token_info:
-        return redirect(url_for('auth.login'))
-    sp = spotipy.Spotify(auth=token_info['access_token'])
+        sp = spotipy.Spotify(client_credentials_manager=get_credentials())
+    else:
+        sp = spotipy.Spotify(auth=token_info['access_token'])
     playlist = sp.playlist(playlist_id = id)
     tracks = sp.playlist_tracks(playlist_id=id)
-    return render_template('playlist.html', playlist = playlist, tracks = tracks)
+    return render_template('playlist.html', playlist = playlist, tracks = tracks, id= id)
 
 @home_bp.route('/homenl')
 def homenl():
