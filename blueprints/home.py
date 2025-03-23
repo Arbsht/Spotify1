@@ -1,11 +1,26 @@
 from flask import Blueprint, render_template, session, redirect, url_for
 import spotipy
-
 from services.spotify_oauth import *
+from services.charts import get_top_artists  # Importiamo la funzione per i grafici
+
 
 home_bp = Blueprint('home', __name__)
 
+
+@home_bp.route('/charts')
+def show_charts():
+    token_info = session.get('token_info', None)
+    if not token_info:
+        return redirect(url_for('home.homenl'))
+    
+    sp = spotipy.Spotify(auth=token_info['access_token'])  
+    top_artists_chart = get_top_artists(sp)  # Recupera il grafico
+
+    # Passa il grafico al template
+    return render_template('charts.html', top_artists_chart=top_artists_chart)
+
 @home_bp.route('/home') 
+
 def home():
     token_info = session.get('token_info', None) #recupero token sissione (salvato prima)
     if not token_info:
