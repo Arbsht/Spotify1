@@ -7,17 +7,7 @@ from services.charts import get_top_artists  # Importiamo la funzione per i graf
 home_bp = Blueprint('home', __name__)
 
 
-@home_bp.route('/charts')
-def show_charts():
-    token_info = session.get('token_info', None)
-    if not token_info:
-        return redirect(url_for('home.homenl'))
-    
-    sp = spotipy.Spotify(auth=token_info['access_token'])  
-    top_artists_chart = get_top_artists(sp)  # Recupera il grafico
 
-    # Passa il grafico al template
-    return render_template('charts.html', top_artists_chart=top_artists_chart)
 
 @home_bp.route('/home') 
 
@@ -34,6 +24,18 @@ def home():
     print("USER:")
     print(user_info) #capiamo la struttura di user_info per usarle nel frontend
     return render_template('home.html', user_info=user_info, playlists=playlists_info) #passo le info utente all'home.html 
+
+    @home_bp.route('/charts')
+    def show_charts():
+        token_info = session.get('token_info', None)
+        if not token_info:
+            return redirect(url_for('home.homenl'))
+    
+    sp = spotipy.Spotify(auth=token_info['access_token'])  
+    top_artists_chart = get_top_artists(sp)  # Recupera il grafico
+
+    # Passa il grafico al template
+    return render_template('charts.html', top_artists_chart=top_artists_chart)
 
 @home_bp.route('/playlist/<id>')
 def playlist(id):
