@@ -4,18 +4,137 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charts</title>
+    <style>
+        /* Stile globale */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: #1DB954;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Animazione di caricamento (simile a Spotify) */
+        .loader {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 5px solid #1DB954;
+            border-top: 5px solid transparent;
+            animation: spin 1s linear infinite;
+            margin-bottom: 30px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Bottone con effetto hover */
+        .btn {
+            padding: 15px 30px;
+            background-color: #1DB954;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            background-color: #1ed760;
+        }
+
+        /* Animazione delle onde */
+        .waves {
+            position: relative;
+            display: flex;
+            justify-content: space-around;
+            width: 100px;
+            margin-top: 20px;
+        }
+
+        .wave {
+            width: 10px;
+            height: 10px;
+            background-color: #1DB954;
+            border-radius: 50%;
+            animation: waveAnimation 1s ease-in-out infinite;
+        }
+
+        .wave:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .wave:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .wave:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes waveAnimation {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+        }
+
+        /* Stile per i grafici */
+        .chart-container {
+            width: 80%;
+            margin-bottom: 50px;
+        }
+    </style>
 </head>
 <body>
+
     <h1>Top 5 Artisti più presenti</h1>
-    <div>
-        {{ top_artists_chart | safe }}
+    <div class="chart-container">
+        <!-- Qui verrà inserito il grafico degli artisti -->
+        <div>
+            {{ top_artists_chart | safe }}
+        </div>
     </div>
 
     <h1>Top 5 Album più presenti</h1>
-    <div>
-        {{ top_albums_chart | safe }}
+    <div class="chart-container">
+        <!-- Qui verrà inserito il grafico degli album -->
+        <div>
+            {{ top_albums_chart | safe }}
+        </div>
     </div>
 
-    <a href="{{ url_for('home.home') }}">Ritorna alla home</a>
+    <!-- Bottone per tornare alla home con animazione -->
+    <a href="{{ url_for('home.home') }}" class="btn">Ritorna alla home</a>
+
+    <!-- Animazione di caricamento (se i grafici non sono ancora caricati) -->
+    <div class="loader"></div>
+
+    <!-- Animazione delle onde -->
+    <div class="waves">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
 </body>
 </html>

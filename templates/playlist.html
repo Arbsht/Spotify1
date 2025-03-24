@@ -1,54 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>GAMK</title>
-        <!-- Collegamento al file CSS separato -->
-        <link rel="stylesheet" href="static/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAMK</title>
+    <!-- Collegamento al file CSS separato -->
+    <link rel="stylesheet" href="static/css/style.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1DB954;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            animation: fadeIn 1.5s ease;
+        }
+
+        img {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        a {
+            text-decoration: none;
+            color: #1DB954;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #1ed760;
+        }
+
+        table {
+            width: 80%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            text-align: left;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            padding: 15px;
+            color: white;
+        }
+
+        th {
+            background-color: #1DB954;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #444;
+            font-size: 1rem;
+        }
+
+        tr:hover {
+            background-color: #555;
+        }
+
+        /* Animazione di dissolvenza */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
-    <body id="body">
-    <a href="{{ url_for ('home.home')}}">Ritorna alla home</a>
-    <h1>
-    {{ playlist['name'] }}
-</h1>
-<img src="{{ playlist['images'][0]['url'] }}" alt="Jacket playlist" height="100"><br>
-<a href="/playlist/{{ id }}/random">Prendi una canzone a caso</a>
-<table>
-    <thead>
-        <tr>
-            <th>Titolo</th>
-            <th>Artista</th>
-            <th>Album</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for t in tracks['items'] %}
-        <tr>
-        <td style="width: 40ch;"><br>{{ t['track']['name'] }}</td>
-        <td style="width: 40ch;"><br>
-            {% for a in t['track']['artists'] %}
-            {{a['name']}}
+<body id="body">
+    <!-- Link per tornare alla home -->
+    <a href="{{ url_for('home.home') }}" class="back-home">Ritorna alla home</a>
+    
+    <h1>{{ playlist['name'] }}</h1>
+    
+    <!-- Immagine della playlist -->
+    <img src="{{ playlist['images'][0]['url'] }}" alt="Jacket playlist" height="100"><br>
+    
+    <!-- Link per prendere una canzone a caso -->
+    <a href="/playlist/{{ id }}/random">Prendi una canzone a caso</a>
+    
+    <!-- Tabella dei brani -->
+    <table>
+        <thead>
+            <tr>
+                <th>Titolo</th>
+                <th>Artista</th>
+                <th>Album</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tracks['items'] %}
+            <tr>
+                <td style="width: 40ch;">{{ t['track']['name'] }}</td>
+                <td style="width: 40ch;">
+                    {% for a in t['track']['artists'] %}
+                    {{a['name']}}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td style="width: 40ch;">{{ t['track']['album']['name']}}</td>
+            </tr>
             {% endfor %}
-        </td>
-        <td style="width: 40ch;"><br>{{ t['track']['album']['name']}} </td>
-    </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-
-<h1>Top 5 Artisti più presenti</h1>
-        <div>
-            {{ top_artists_chart | safe }}
-        </div>
-    
-        <h1>Top 5 Album più presenti</h1>
-        <div>
-            {{ top_albums_chart | safe }}
-        </div>
-    
-        <a href="{{ url_for('home.home') }}">Ritorna alla home</a>
-
+        </tbody>
+    </table>
 </body>
 </html>

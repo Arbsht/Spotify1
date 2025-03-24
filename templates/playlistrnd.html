@@ -1,23 +1,159 @@
-<html>
-    <a href="{{ url_for ('home.home')}}">Ritorna alla home</a>
-    <h1>
-    {{ track['track']['name'] }}
-</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Artista</th>
-            <th>Album</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>{% for a in track['track']['artists'] %}
-                {{a['name']}}
-                {% endfor %} |</td>
-                <td>| {{ track['track']['album']['name'] }}</td>
-        </tr>
-    </tbody>
-</table>
-<a href="/playlist/{{ id }}/random">Rirolla</a>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1DB954;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            animation: fadeIn 1.5s ease;
+        }
+
+        a {
+            text-decoration: none;
+            color: #1DB954;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #1ed760;
+        }
+
+        table {
+            width: 60%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            text-align: left;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            padding: 15px;
+            color: white;
+        }
+
+        th {
+            background-color: #1DB954;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #444;
+            font-size: 1rem;
+        }
+
+        tr:hover {
+            background-color: #555;
+        }
+
+        /* Animazione di dissolvenza */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Immagine dell'album centrata e con ombra morbida */
+        .album-image {
+            margin: 20px auto;
+            display: block; /* Centra l'immagine */
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6); /* Ombra morbida */
+            width: 200px; /* Puoi cambiare la dimensione a seconda delle tue preferenze */
+            height: 200px;
+            object-fit: cover; /* Mantiene la proporzione dell'immagine */
+        }
+
+        /* Tasto "Rirolla" stilizzato */
+        .rirolla-btn {
+            display: inline-block;
+            background-color: #1DB954;
+            color: white;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            margin-top: 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .rirolla-btn:hover {
+            background-color: #1ed760;
+            transform: scale(1.1); /* Effetto di ingrandimento */
+        }
+
+        /* Posizionamento del link "Ritorna alla home" in alto a destra */
+        .back-home {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.2rem;
+            color: #1DB954;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #333;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-home:hover {
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <!-- Link per tornare alla home posizionato in alto a destra -->
+    <a href="{{ url_for('home.home') }}" class="back-home">Ritorna alla home</a>
+    
+    <h1>{{ track['track']['name'] }}</h1>
+    
+    <!-- Immagine dell'album centrata -->
+    <img src="{{ track['track']['album']['images'][0]['url'] }}" alt="Album Image" class="album-image">
+    
+    <!-- Link per riavviare la canzone -->
+    <a href="/playlist/{{ id }}/random" class="rirolla-btn">Rirolla</a>
+    
+    <!-- Tabella dei dettagli della traccia -->
+    <table>
+        <thead>
+            <tr>
+                <th>Artista</th>
+                <th>Album</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    {% for a in track['track']['artists'] %}
+                        {{ a['name'] }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ track['track']['album']['name'] }}</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
 </html>
