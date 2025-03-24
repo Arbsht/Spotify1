@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, session, redirect, url_for
 import spotipy
 from services.spotify_oauth import *
 from services.charts import get_top_artists  # Importiamo la funzione per i grafici
-
+from services.charts import get_top_albums
 
 home_bp = Blueprint('home', __name__)
 
@@ -46,7 +46,7 @@ def playlist(id):
         sp = spotipy.Spotify(auth=token_info['access_token'])
     playlist = sp.playlist(playlist_id = id)
     tracks = sp.playlist_tracks(playlist_id=id)
-    return render_template('playlist.html', playlist = playlist, tracks = tracks, id= id)
+    return render_template('playlist.html', playlist = playlist, tracks = tracks, id= id, top_artists_chart = get_top_artists(sp, id), top_albums_chart = get_top_albums(sp, id))
 
 @home_bp.route('/homenl')
 def homenl():

@@ -36,5 +36,19 @@
         {% endfor %}
     </tbody>
 </table>
+
+
+<h1>Top 5 Artisti più presenti</h1>
+        <div>
+            {{ top_artists_chart | safe }}
+        </div>
+    
+        <h1>Top 5 Album più presenti</h1>
+        <div>
+            {{ top_albums_chart | safe }}
+        </div>
+    
+        <a href="{{ url_for('home.home') }}">Ritorna alla home</a>
+
 </body>
 </html>
