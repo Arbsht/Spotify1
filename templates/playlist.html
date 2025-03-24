@@ -120,5 +120,13 @@
             {% endfor %}
         </tbody>
     </table>
+    <h1>Top 5 Artisti più presenti</h1>
+    <!-- Inseriamo il grafico generato da Plotly -->
+    <div>
+        {{ top_artists_chart | safe }}
+    </div>
+    <h1>Top 5 Album più presenti</h1>
+    <!-- Stessa cosa ma con gli album -->
+    <div>{{ top_albums_chart|safe }}</div>
 </body>
 </html>
