@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ricerca Playlist</title>
     <style>
-        /* Stile globale */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #121212;
@@ -24,7 +23,6 @@
             margin-bottom: 20px;
         }
 
-        /* Stile del link alla home */
         a {
             color: #1DB954;
             text-decoration: none;
@@ -37,26 +35,32 @@
             color: #1ed760;
         }
 
-        /* Stile della tabella */
         table {
             width: 80%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 15px;
+            overflow: hidden;
+            background-color: #181818;
             margin-top: 20px;
-            border: 1px solid #444;
         }
 
         th, td {
-            padding: 10px;
+            padding: 15px;
             text-align: left;
-            border-bottom: 1px solid #444;
         }
 
         th {
             background-color: #1DB954;
+            color: white;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
         }
 
         td {
-            background-color: #181818;
+            background-color: #282828;
+            border-bottom: 1px solid #444;
+            border-radius: 0 0 15px 15px;
         }
 
         td a {
@@ -69,7 +73,10 @@
             color: #1ed760;
         }
 
-        /* Animazione delle onde */
+        img {
+            border-radius: 10px;
+        }
+
         .waves {
             position: relative;
             display: flex;
@@ -107,16 +114,16 @@
     </style>
 </head>
 <body>
-
     <h1>Ricerca di: {{ query }}</h1>
     <a href="{{ url_for('home.home') }}">Ritorna alla home</a>
 
     <table>
         <thead>
             <tr>
-                <th>| Nome Playlist |</th>
-                <th>| Numero Brani |</th>
-                <th>| Jacket |</th>
+                <th> Nome Playlist </th>
+                <th> Numero Brani </th>
+                <th> Copertina </th>
+                
             </tr>
         </thead>
         <tbody>
@@ -139,12 +146,10 @@
         </tbody>
     </table>
 
-    <!-- Animazione delle onde -->
     <div class="waves">
         <div class="wave"></div>
         <div class="wave"></div>
         <div class="wave"></div>
     </div>
-
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAMK</title>
-    <!-- Collegamento al file CSS separato -->
+    
     <link rel="stylesheet" href="static/css/style.css">
     <style>
         body {
@@ -30,17 +30,27 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        a {
-            text-decoration: none;
-            color: #1DB954;
-            font-size: 1.2rem;
-            margin-top: 10px;
-            display: inline-block;
-            transition: color 0.3s ease;
+        .links-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
         }
 
-        a:hover {
-            color: #1ed760;
+        .links-container a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 2px solid #1DB954;
+            transition: all 0.3s ease;
+            background-color: #1DB954;
+        }
+
+        .links-container a:hover {
+            background-color: #1ed760;
+            border-color: #1ed760;
         }
 
         table {
@@ -74,7 +84,6 @@
             background-color: #555;
         }
 
-        /* Animazione di dissolvenza */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -86,18 +95,16 @@
     </style>
 </head>
 <body id="body">
-    <!-- Link per tornare alla home -->
-    <a href="{{ url_for('home.home') }}" class="back-home">Ritorna alla home</a>
     
     <h1>{{ playlist['name'] }}</h1>
     
-    <!-- Immagine della playlist -->
     <img src="{{ playlist['images'][0]['url'] }}" alt="Jacket playlist" height="100"><br>
     
-    <!-- Link per prendere una canzone a caso -->
-    <a href="/playlist/{{ id }}/random">Prendi una canzone a caso</a>
+    <div class="links-container">
+        <a href="{{ url_for('home.home') }}">Ritorna alla home</a>
+        <a href="/playlist/{{ id }}/random">Prendi una canzone a caso</a>
+    </div>
     
-    <!-- Tabella dei brani -->
     <table>
         <thead>
             <tr>
@@ -121,12 +128,12 @@
         </tbody>
     </table>
     <h1>Top 5 Artisti più presenti</h1>
-    <!-- Inseriamo il grafico generato da Plotly -->
+    
     <div>
         {{ top_artists_chart | safe }}
     </div>
     <h1>Top 5 Album più presenti</h1>
-    <!-- Stessa cosa ma con gli album -->
+    
     <div>{{ top_albums_chart|safe }}</div>
 </body>
 </html>

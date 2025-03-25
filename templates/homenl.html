@@ -4,21 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAMK</title>
-    <!-- Collegamento al file CSS separato -->
+    
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
-    <!-- Barra di ricerca -->
+    
     <div class="search-container">
         <form action="/cerca" method="post"><input type="text" placeholder="Cerca" required name="cerca"><button type="submit">cerca</button></form>
     </div>
 
-    <!-- Bottone Login -->
+    
     <a href="{{ url_for('auth.login') }}" id="login-btn">Login</a>
     
     <div class="container">
         <h1>Benvenuto su GAMK</h1>
-        <p>Non so cosa mettere qui</p>
     </div>
 </body>
 </html>
