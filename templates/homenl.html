@@ -8,13 +8,17 @@
     <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
+    {% if username %}
+    <h1>Benvenuto {{ username }}</h1>
+    {% endif %}
+    <!-- Bottone Login -->
+    <a href="{{ url_for('auth.login') }}" id="btn">Login</a>
     <!-- Barra di ricerca -->
     <div class="search-container">
         <form action="/cerca" method="post"><input type="text" placeholder="Cerca" required name="cerca"><button type="submit">cerca</button></form>
     </div>
 
-    <!-- Bottone Login -->
-    <a href="{{ url_for('auth.login') }}" id="login-btn">Login</a>
+    
     
     <div class="container">
         <h1>Benvenuto su GAMK</h1>

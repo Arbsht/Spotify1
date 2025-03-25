@@ -3,6 +3,8 @@ import spotipy
 from services.spotify_oauth import *
 from services.charts import get_top_artists  # Importiamo la funzione per i grafici
 from services.charts import get_top_albums
+from flask_login import current_user
+from models import *
 
 home_bp = Blueprint('home', __name__)
 
@@ -13,6 +15,7 @@ home_bp = Blueprint('home', __name__)
 
 def home():
     token_info = session.get('token_info', None) #recupero token sissione (salvato prima)
+    salvati = ListaPlaylist.query.filter_by(utente = current_user.username).all()
     if not token_info:
         return redirect(url_for('home.homenl'))
     sp = spotipy.Spotify(auth=token_info['access_token']) #usiamo il token per ottenere i dati del profilo
@@ -23,7 +26,7 @@ def home():
     print(playlists)
     print("USER:")
     print(user_info) #capiamo la struttura di user_info per usarle nel frontend
-    return render_template('home.html', user_info=user_info, playlists=playlists_info) #passo le info utente all'home.html 
+    return render_template('home.html', user_info=user_info, playlists=playlists_info, username = current_user.username, salvati = salvati) #passo le info utente all'home.html 
 
     @home_bp.route('/charts')
     def show_charts():
@@ -51,3 +54,24 @@ def playlist(id):
 @home_bp.route('/homenl')
 def homenl():
     return render_template('homenl.html')
+
+@home_bp.route('/playlist/<id>/aggiungi')
+def aggiungi(id):
+    token_info = session.get('token_info', None) #recupero token sissione (salvato prima)
+    if not token_info:
+        sp = spotipy.Spotify(client_credentials_manager=get_credentials())
+    else:
+        sp = spotipy.Spotify(auth=token_info['access_token'])
+    playlist = sp.playlist(playlist_id=id)
+    nome = playlist['name']
+    nuovoelemento = ListaPlaylist(utente = current_user.username, nome = nome, elemento = id)
+    db.session.add(nuovoelemento)
+    db.session.commit()
+    return redirect(url_for('home.home'))
+
+@home_bp.route('/rimuovi/<id>')
+def rimuovi(id):
+    elemento = ListaPlaylist.query.get_or_404(id)
+    db.session.delete(elemento)
+    db.session.commit()
+    return redirect(url_for('home.home'))

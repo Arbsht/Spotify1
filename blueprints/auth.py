@@ -1,5 +1,9 @@
 from flask import Blueprint, Flask, redirect, request, url_for, render_template,session
+from flask_login import login_required, login_user, logout_user, current_user
+from models import *
 from services.spotify_oauth import *
+import os
+import flask_bcrypt
 
 auth_bp = Blueprint('auth', __name__) #creiamo il blueprint@app.route('/')
 
@@ -17,10 +21,65 @@ def callback():
     code = request.args.get('code') #recupero codice di autorizzazione
     token_info = sp_oauth.get_access_token(code) #uso il code per un codice di accesso
     session['token_info'] = token_info #salvo il token nella mia sessione x riutilizzarlo
-    return redirect(url_for('home.home'))
+    return redirect(url_for('auth.loginlocale'))
 
 @auth_bp.route('/logout')
 def logout():
+    try:
+        os.remove(".cache")
+    except:
+        print(".cache non esiste")
+    logout_user() #logout user
     session.clear() #cancelliamo l'access token salvato in session
     
     return redirect(url_for('auth.blank'))
+
+@auth_bp.route('/loginlocale', methods=['GET', 'POST'])
+def loginlocale():
+    token_info = session.get('token_info', None) #recupero token sissione (salvato prima)
+    sp = spotipy.Spotify(auth=token_info['access_token']) #usiamo il token per ottenere i dati del profilo
+    user_info = sp.current_user()
+    if request.method == 'POST':
+        username = request.form['username'] #prende dati dalle form
+        password = request.form['password']
+        #cerca user db
+        user = User.query.filter_by(username=username).first()
+        if user and flask_bcrypt.check_password_hash(user.password, password): #se user esiste
+            login_user(user)
+            return redirect(url_for('home.home'))
+        return render_template('login.html', error="Credenziali non valide.", user_info=user_info) #errore se credenziali errate
+    return render_template('login.html', error=None, user_info=user_info)
+
+@auth_bp.route('/register', methods=['GET', 'POST'])
+def register():
+    token_info = session.get('token_info', None) #recupero token sissione (salvato prima)
+    sp = spotipy.Spotify(auth=token_info['access_token']) #usiamo il token per ottenere i dati del profilo
+    user_info = sp.current_user()
+    if request.method == 'POST':
+        username = request.form['username'] #prende dati dalle form
+        password = request.form['password']
+        #check se l'utente esiste nel db
+        if User.query.filter_by(username=username).first():
+            return render_template('register.html', error="Questo username è già in uso.", user_info=user_info)
+        if len(username) < 3 and len(password) < 7:
+            return render_template('register.html', error="Lo username e la password usati sono troppo corti (min 4 per username, min 8 per password)", user_info=user_info)
+        if len(username) < 3:
+            return render_template('register.html', error="Lo username usato è troppo corto (minimo 4 caratteri)", user_info=user_info)
+        if len(password) < 7:
+            return render_template('register.html', error="La password usata è troppo corta (minimo 8 caratteri)", user_info=user_info)
+        #crea user e lo salva nel db
+        pw_hash = flask_bcrypt.generate_password_hash(password)
+        new_user = User(username=username, password=pw_hash)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('auth.loginlocale'))
+    return render_template('register.html', error=None, user_info=user_info)
+
+@auth_bp.route('/annullalogin')
+def annullalogin():
+    try:
+        os.remove(".cache")
+    except:
+        print(".cache non esiste")
+    session.clear() #cancelliamo l'access token salvato in session
+    return redirect(url_for('home.homenl'))

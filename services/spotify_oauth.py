@@ -2,20 +2,16 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
 #oggi leak di chiavi api
 sp_oauth = SpotifyOAuth(
-    client_id='c1e1e455737c44a5a404101c638179d8',
-    client_secret='5197209f857f4eee8537c515723e89d7',
+    client_id='486292e9ce954bab9887cd9ffba68664',
+    client_secret='36efac96d2cf4dc9a9b4b3cdb2e6f83c',
     redirect_uri='http://127.0.0.1:5000/callback',  
 
     scope="user-read-private user-read-email playlist-read-private", #permessi x informazioni dell'utente
     show_dialog=True
 )
 
-SPOTIFY_CLIENT_ID = "client_id"
-SPOTIFY_CLIENT_SECRET = "client_secret"
-SPOTIFY_REDIRECT_URI = "http://127.0.0.1:5000/callback" #dopo il login andiamo qui
-
 def get_spotify_object(token_info):
     return spotipy.Spotify(auth=token_info['access_token']) 
 
 def get_credentials():
-    return SpotifyClientCredentials(client_id='c1e1e455737c44a5a404101c638179d8',client_secret='5197209f857f4eee8537c515723e89d7')
+    return SpotifyClientCredentials(client_id='486292e9ce954bab9887cd9ffba68664',client_secret='36efac96d2cf4dc9a9b4b3cdb2e6f83c')
