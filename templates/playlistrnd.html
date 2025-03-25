@@ -76,18 +76,17 @@
             }
         }
 
-        /* Immagine dell'album centrata e con ombra morbida */
         .album-image {
             margin: 20px auto;
-            display: block; /* Centra l'immagine */
+            display: block; 
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6); /* Ombra morbida */
-            width: 200px; /* Puoi cambiare la dimensione a seconda delle tue preferenze */
+            width: 200px; 
             height: 200px;
-            object-fit: cover; /* Mantiene la proporzione dell'immagine */
+            object-fit: cover; 
         }
 
-        /* Tasto "Rirolla" stilizzato */
+       
         .rirolla-btn {
             display: inline-block;
             background-color: #1DB954;
@@ -102,10 +101,10 @@
 
         .rirolla-btn:hover {
             background-color: #1ed760;
-            transform: scale(1.1); /* Effetto di ingrandimento */
+            transform: scale(1.1); 
         }
 
-        /* Posizionamento del link "Ritorna alla home" in alto a destra */
+        
         .back-home {
             position: absolute;
             top: 20px;
@@ -125,18 +124,18 @@
     </style>
 </head>
 <body>
-    <!-- Link per tornare alla home posizionato in alto a destra -->
+    
     <a href="{{ url_for('home.home') }}" class="back-home">Ritorna alla home</a>
     
     <h1>{{ track['track']['name'] }}</h1>
     
-    <!-- Immagine dell'album centrata -->
+    
     <img src="{{ track['track']['album']['images'][0]['url'] }}" alt="Album Image" class="album-image">
     
-    <!-- Link per riavviare la canzone -->
+    
     <a href="/playlist/{{ id }}/random" class="rirolla-btn">Rirolla</a>
     
-    <!-- Tabella dei dettagli della traccia -->
+    
     <table>
         <thead>
             <tr>

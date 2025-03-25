@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charts</title>
     <style>
-        /* Stile globale */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #121212;
@@ -24,7 +23,6 @@
             margin-bottom: 20px;
         }
 
-        /* Animazione di caricamento (simile a Spotify) */
         .loader {
             width: 50px;
             height: 50px;
@@ -44,7 +42,6 @@
             }
         }
 
-        /* Bottone con effetto hover */
         .btn {
             padding: 15px 30px;
             background-color: #1DB954;
@@ -62,7 +59,6 @@
             background-color: #1ed760;
         }
 
-        /* Animazione delle onde */
         .waves {
             position: relative;
             display: flex;
@@ -98,7 +94,6 @@
             }
         }
 
-        /* Stile per i grafici */
         .chart-container {
             width: 80%;
             margin-bottom: 50px;
@@ -109,7 +104,6 @@
 
     <h1>Top 5 Artisti più presenti</h1>
     <div class="chart-container">
-        <!-- Qui verrà inserito il grafico degli artisti -->
         <div>
             {{ top_artists_chart | safe }}
         </div>
@@ -117,19 +111,15 @@
 
     <h1>Top 5 Album più presenti</h1>
     <div class="chart-container">
-        <!-- Qui verrà inserito il grafico degli album -->
         <div>
             {{ top_albums_chart | safe }}
         </div>
     </div>
 
-    <!-- Bottone per tornare alla home con animazione -->
     <a href="{{ url_for('home.home') }}" class="btn">Ritorna alla home</a>
 
-    <!-- Animazione di caricamento (se i grafici non sono ancora caricati) -->
     <div class="loader"></div>
 
-    <!-- Animazione delle onde -->
     <div class="waves">
         <div class="wave"></div>
         <div class="wave"></div>
