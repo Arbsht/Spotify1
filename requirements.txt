@@ -2,3 +2,6 @@ flask
 spotipy
 pandas
 plotly
+flask_login
+flask_sqlalchemy
+flask_bcrypt
