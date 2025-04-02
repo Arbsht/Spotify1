@@ -1,4 +1,4 @@
-import plotly.express as px
+import plotly.express as px 
 import pandas as pd
 
 def get_top_artists(sp, playlist_id):
@@ -48,5 +48,22 @@ def get_genre_chart(sp, playlist_id):
     df = pd.DataFrame(genre_count.items(), columns=['Genre', 'Count']).sort_values(by='Count', ascending=False)
 
     fig = px.pie(df, names='Genre', values='Count', title='Distribuzione dei generi musicali', color_discrete_sequence=px.colors.sequential.Viridis)
+    
+    return fig.to_html(full_html=False)
+
+def get_tracks_per_year_chart(sp, playlist_id):
+    year_count = {}
+
+    playlist_tracks = sp.playlist_tracks(playlist_id)
+    for track in playlist_tracks['items']:
+        if track['track'] and 'album' in track['track'] and 'release_date' in track['track']['album']:
+            release_date = track['track']['album']['release_date']
+            year = release_date.split('-')[0]  # Prendi solo l'anno
+            if year.isdigit():
+                year_count[year] = year_count.get(year, 0) + 1
+    
+    df = pd.DataFrame(year_count.items(), columns=['Year', 'Count']).sort_values(by='Year', ascending=True)
+    
+    fig = px.bar(df, x='Year', y='Count', title='Distribuzione temporale dei brani', color='Year')
     
     return fig.to_html(full_html=False)

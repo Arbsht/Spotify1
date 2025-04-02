@@ -23,23 +23,9 @@
             margin-bottom: 20px;
         }
 
-        .loader {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: 5px solid #1DB954;
-            border-top: 5px solid transparent;
-            animation: spin 1s linear infinite;
-            margin-bottom: 30px;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+        .chart-container {
+            width: 80%;
+            margin-bottom: 50px;
         }
 
         .btn {
@@ -57,46 +43,6 @@
         .btn:hover {
             transform: scale(1.1);
             background-color: #1ed760;
-        }
-
-        .waves {
-            position: relative;
-            display: flex;
-            justify-content: space-around;
-            width: 100px;
-            margin-top: 20px;
-        }
-
-        .wave {
-            width: 10px;
-            height: 10px;
-            background-color: #1DB954;
-            border-radius: 50%;
-            animation: waveAnimation 1s ease-in-out infinite;
-        }
-
-        .wave:nth-child(1) {
-            animation-delay: 0s;
-        }
-        .wave:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .wave:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes waveAnimation {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.5);
-            }
-        }
-
-        .chart-container {
-            width: 80%;
-            margin-bottom: 50px;
         }
     </style>
 </head>
@@ -116,15 +62,21 @@
         </div>
     </div>
 
-    <a href="{{ url_for('home.home') }}" class="btn">Ritorna alla home</a>
-
-    <div class="loader"></div>
-
-    <div class="waves">
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
+    <h1>Distribuzione dei generi musicali</h1>
+    <div class="chart-container">
+        <div>
+            {{ genre_chart | safe }}
+        </div>
     </div>
+
+    <h1>Distribuzione temporale dei brani</h1>
+    <div class="chart-container">
+        <div>
+            {{ tracks_per_year_chart | safe }}
+        </div>
+    </div>
+
+    <a href="{{ url_for('home.home') }}" class="btn">Ritorna alla home</a>
 
 </body>
 </html>
