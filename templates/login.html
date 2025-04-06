@@ -3,44 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <!-- Bootstrap CSS -->
+    <title>Login - GAMK</title>
+    
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
+            background-color: #121212;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #fff;
+            overflow-x: hidden;
         }
+
         .login-container {
             max-width: 400px;
-            margin: 50px auto;
-            padding: 30px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 80px auto;
+            padding: 40px;
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            animation: fadeInUp 1s ease;
         }
-        .form-control {
-            border-radius: 5px;
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .btn-primary {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .alert {
+
+        .logo {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #1db954;
             margin-bottom: 20px;
+            letter-spacing: 4px;
+            animation: popIn 1s ease;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.6);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .form-control {
+            background-color: #282828;
+            border: none;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background-color: #333;
+            color: #fff;
+            box-shadow: none;
+            border: 1px solid #1db954;
+            transform: scale(1.02);
+        }
+
+        .btn-primary {
+            background-color: #1db954;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #1ed760;
+            transform: scale(1.03);
+        }
+
+        .alert {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+        }
+
+        a {
+            color: #1db954;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #1ed760;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
 <div class="login-container">
+    <div class="logo">GAMK</div>
     <h2 class="text-center">Login di {{ user_info['display_name'] }}</h2>
+    
     {% if error %}
         <div class="alert alert-danger" role="alert">
             {{ error }}
         </div>
     {% endif %}
+    
     <form method="POST">
         <div class="form-group">
             <label for="username">Username:</label>
@@ -52,13 +126,14 @@
         </div>
         <button type="submit" class="btn btn-primary">Accedi</button>
     </form>
-    <div class="mt-3 text-center">
+    
+    <div class="mt-4 text-center">
         <a href="{{ url_for('auth.register') }}">Non hai un account? Registrati qui.</a><br>
-        <a href="{{ url_for('auth.annullalogin')}}">Annulla il login spotify</a>
+        <a href="{{ url_for('auth.annullalogin') }}">Annulla il login Spotify</a>
     </div>
 </div>
 
-<!-- Bootstrap JS and dependencies -->
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

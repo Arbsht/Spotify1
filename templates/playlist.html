@@ -4,68 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAMK</title>
-    
+
     <link rel="stylesheet" href="static/css/style.css">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background-color: #121212;
             color: white;
             margin: 0;
             padding: 20px;
             text-align: center;
+            animation: fadeInBody 1.5s ease;
+        }
+
+        @keyframes fadeInBody {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            color: #1db954;
+            font-weight: 800;
+            letter-spacing: 6px;
+            margin-bottom: 10px;
+            animation: popIn 1s ease;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.6);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         h1 {
             color: #1DB954;
-            font-size: 3rem;
+            font-size: 2.2rem;
             margin-bottom: 20px;
             font-weight: 600;
-            animation: fadeIn 1.5s ease;
+            animation: fadeInTitle 1.5s ease;
+        }
+
+        @keyframes fadeInTitle {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         img {
             margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+            max-width: 100%;
+            animation: fadeInImg 1s ease;
         }
 
-        .links-container {
+        @keyframes fadeInImg {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .links-container, .links-inline {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 15px;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            animation: fadeInLinks 1.5s ease;
         }
 
-        .links-container a {
+        .links-inline a, .links-container a {
             text-decoration: none;
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             padding: 10px 20px;
-            border-radius: 20px;
+            border-radius: 25px;
             border: 2px solid #1DB954;
-            transition: all 0.3s ease;
             background-color: #1DB954;
+            transition: all 0.3s ease;
         }
 
-        .links-container a:hover {
+        .links-inline a:hover, .links-container a:hover {
             background-color: #1ed760;
             border-color: #1ed760;
+            transform: scale(1.05);
         }
 
         table {
-            width: 80%;
+            width: 90%;
+            max-width: 1000px;
             margin: 30px auto;
             border-collapse: collapse;
-            text-align: left;
-            background-color: #333;
+            background-color: #1e1e1e;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            animation: fadeInTable 1.2s ease;
         }
 
         th, td {
-            padding: 15px;
+            padding: 16px;
             color: white;
         }
 
@@ -76,34 +124,56 @@
         }
 
         td {
-            background-color: #444;
+            background-color: #292929;
             font-size: 1rem;
         }
 
         tr:hover {
-            background-color: #555;
+            background-color: #3a3a3a;
         }
 
-        @keyframes fadeIn {
+        @keyframes fadeInTable {
             from {
                 opacity: 0;
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+     
+        .chart-section {
+            margin-top: 40px;
+            animation: fadeInChart 1.3s ease;
+        }
+
+        @keyframes fadeInChart {
+            from {
+                opacity: 0;
+                transform: scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
             }
         }
     </style>
 </head>
 <body id="body">
+
+    <div class="logo">GAMK</div>
     
     <h1>{{ playlist['name'] }}</h1>
     
     <img src="{{ playlist['images'][0]['url'] }}" alt="Jacket playlist" height="100"><br>
     
-    <!-- Link per prendere una canzone a caso -->
-    <a href="/playlist/{{ id }}/random">Prendi una canzone a caso</a><br>
-    <a href="/playlist/{{ id }}/aggiungi">Aggiungi playlist alla lista locale</a>
-    
+    <div class="links-inline">
+        <a href="/playlist/{{ id }}/random">🎵 Prendi una canzone a caso</a>
+        <a href="/playlist/{{ id }}/aggiungi">➕ Aggiungi playlist alla lista locale</a>
+    </div>
+
     <table>
         <thead>
             <tr>
@@ -126,14 +196,21 @@
             {% endfor %}
         </tbody>
     </table>
-    <h1>Top 5 Artisti più presenti</h1>
-    
-    <div>
-        {{ top_artists_chart | safe }}
+
+    <div class="chart-section">
+        <h1>Top 5 Artisti più presenti</h1>
+        <div>{{ top_artists_chart | safe }}</div>
     </div>
-    <h1>Top 5 Album più presenti</h1>
-    <div>{{ top_albums_chart|safe }}</div>
-    <h1>generi più presenti</h1>
-    <div>{{top_genres_chart|safe}}</div>
+
+    <div class="chart-section">
+        <h1>Top 5 Album più presenti</h1>
+        <div>{{ top_albums_chart | safe }}</div>
+    </div>
+
+    <div class="chart-section">
+        <h1>Generi più presenti</h1>
+        <div>{{ top_genres_chart | safe }}</div>
+    </div>
+
 </body>
 </html>
