@@ -1,10 +1,11 @@
+from math import floor
 import plotly.express as px 
 import pandas as pd
 
-def get_top_artists(sp, playlist_id):
+def get_top_artists(tracks):
     artist_count = {}
 
-    playlist_tracks = sp.playlist_tracks(playlist_id)
+    playlist_tracks = tracks
     for track in playlist_tracks['items']:
         if track['track']:  
             artist_name = track['track']['artists'][0]['name']
@@ -16,10 +17,10 @@ def get_top_artists(sp, playlist_id):
     
     return fig.to_html(full_html=False)
 
-def get_top_albums(sp, playlist_id):
+def get_top_albums(tracks):
     album_count = {}
 
-    playlist_tracks = sp.playlist_tracks(playlist_id)
+    playlist_tracks = tracks
     for track in playlist_tracks['items']:
         if track['track']:  
             album_name = track['track']['album']['name']
@@ -31,30 +32,34 @@ def get_top_albums(sp, playlist_id):
     
     return fig.to_html(full_html=False)
 
-def get_genre_chart(sp, playlist_id):
+def get_genre_chart(sp, tracks):
+    #io quando rate limit
     genre_count = {}
-
-    playlist_tracks = sp.playlist_tracks(playlist_id)
+    artist_genre = {}
+    playlist_tracks = tracks
     for track in playlist_tracks['items']:
         if track['track']:  
             artist = track['track']['artists'][0]
-            artist_info = sp.artist(artist['id'])
-            genres = artist_info.get('genres', [])
-            
-            if genres:
-                genre = genres[0]  # Prendi solo il primo genere
-                genre_count[genre] = genre_count.get(genre, 0) + 1
+            artist_id = artist['id']
+            if str(artist) in artist_genre.keys():
+                genre_count[artist_genre[str(artist)]] = genre_count.get(artist_genre[str(artist)], 0) + 1
+            else:
+                artist_info = sp.artist(artist_id)
+                if artist_info['genres']:
+                    genre = artist_info['genres']  # Prendi solo il primo genere
+                    genre = artist_info['genres'][0]
+                    genre_count[genre] = genre_count.get(genre, 0) + 1
+                    artist_genre[str(artist)] = genre
     
     df = pd.DataFrame(genre_count.items(), columns=['Genre', 'Count']).sort_values(by='Count', ascending=False)
-
     fig = px.pie(df, names='Genre', values='Count', title='Distribuzione dei generi musicali', color_discrete_sequence=px.colors.sequential.Viridis)
     
     return fig.to_html(full_html=False)
 
-def get_tracks_per_year_chart(sp, playlist_id):
+def get_tracks_per_year_chart(tracks):
     year_count = {}
 
-    playlist_tracks = sp.playlist_tracks(playlist_id)
+    playlist_tracks = tracks
     for track in playlist_tracks['items']:
         if track['track'] and 'album' in track['track'] and 'release_date' in track['track']['album']:
             release_date = track['track']['album']['release_date']
@@ -66,4 +71,26 @@ def get_tracks_per_year_chart(sp, playlist_id):
     
     fig = px.bar(df, x='Year', y='Count', title='Distribuzione temporale dei brani', color='Year')
     
+    return fig.to_html(full_html=False)
+
+def get_tracks_duration(tracks):
+    duration_count = {}
+    playlist_tracks = tracks
+    for track in playlist_tracks['items']:
+        if track['track']:
+            duration = floor(track['track']['duration_ms'] / 60000)
+            duration_count[duration] = duration_count.get(duration, 0) + 1
+    df = pd.DataFrame(duration_count.items(), columns=['Duration (minutes)', 'Count']).sort_values(by='Duration (minutes)', ascending=True)
+    fig = px.bar(df, x='Duration (minutes)', y='Count', title='Distribuzione della durata dei brani', color='Duration (minutes)')
+    return fig.to_html(full_html=False)
+
+def get_tracks_popularity(tracks):
+    popularity_count = {}
+    playlist_tracks = tracks
+    for track in playlist_tracks['items']:
+        if track['track']:
+            popularity = int(track['track']['popularity'])
+            popularity_count[popularity] = popularity_count.get(popularity, 0) + 1
+    df = pd.DataFrame(popularity_count.items(), columns=['Popolarità', 'Count']).sort_values(by='Popolarità', ascending=True)
+    fig = px.line(df, x='Popolarità', y='Count', title='Popolarità dei brani')
     return fig.to_html(full_html=False)

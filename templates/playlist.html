@@ -171,7 +171,11 @@
     
     <div class="links-inline">
         <a href="/playlist/{{ id }}/random">🎵 Prendi una canzone a caso</a>
+        {% if hologgato %}
         <a href="/playlist/{{ id }}/aggiungi">➕ Aggiungi playlist alla lista locale</a>
+        {% endif %}
+        <a href="{{ url_for('home.home') }}">🏠 Ritorna alla home</a>
+        <a href="/compare/{{id}}">Compara questa playlist</a>
     </div>
 
     <table>
@@ -210,6 +214,24 @@
     <div class="chart-section">
         <h1>Generi più presenti</h1>
         <div>{{ top_genres_chart | safe }}</div>
+    </div>
+
+    <div class="chart-section">
+        <h1>Distribuzione temporale dei brani</h1>
+        <div> {{ tracks_per_year_chart | safe }}</div>
+       
+    </div>
+
+    <div class="chart-section">
+        <h1>Distribuzione della durata dei brani</h1>
+        <div> {{ tracks_duration | safe }}</div>
+       
+    </div>
+
+    <div class="chart-section">
+        <h1>Distribuzione della popolarità dei brani</h1>
+        <div> {{ tracks_popularity | safe }}</div>
+       
     </div>
 
 </body>

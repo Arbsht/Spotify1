@@ -107,7 +107,7 @@
 
 <div class="login-container">
     <div class="logo">GAMK</div>
-    <h2 class="text-center">Login di {{ user_info['display_name'] }}</h2>
+    <h2 class="text-center">Login</h2>
     
     {% if error %}
         <div class="alert alert-danger" role="alert">
@@ -129,7 +129,7 @@
     
     <div class="mt-4 text-center">
         <a href="{{ url_for('auth.register') }}">Non hai un account? Registrati qui.</a><br>
-        <a href="{{ url_for('auth.annullalogin') }}">Annulla il login Spotify</a>
+        <a href="{{ url_for('auth.annullalogin') }}">Annulla il login</a>
     </div>
 </div>
 

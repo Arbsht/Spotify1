@@ -13,45 +13,50 @@ home_bp = Blueprint('home', __name__)
 @home_bp.route('/home') 
 
 def home():
+    if current_user.is_authenticated == False:
+        return(redirect(url_for('home.homenl')))
     token_info = session.get('token_info', None) #recupero token sissione (salvato prima)
     salvati = ListaPlaylist.query.filter_by(utente = current_user.username).all()
     if not token_info:
-        return redirect(url_for('home.homenl'))
-    sp = spotipy.Spotify(auth=token_info['access_token']) #usiamo il token per ottenere i dati del profilo
-    user_info = sp.current_user()
-    playlists = sp.current_user_playlists(limit=50)
-    playlists_info = playlists['items']
-    print("Playlist:")
-    print(playlists)
-    print("USER:")
-    print(user_info) #capiamo la struttura di user_info per usarle nel frontend
-    return render_template('home.html', user_info=user_info, playlists=playlists_info, username = current_user.username, salvati = salvati) #passo le info utente all'home.html 
-
-    @home_bp.route('/charts')
-    def show_charts():
-        token_info = session.get('token_info', None)
-        if not token_info:
-            return redirect(url_for('home.homenl'))
-    
-    sp = spotipy.Spotify(auth=token_info['access_token'])  
-    top_artists_chart = get_top_artists(sp)  # Recupera il grafico
-
-    # Passa il grafico al template
-    return render_template('charts.html', top_artists_chart=top_artists_chart)
+        sp = spotipy.Spotify(client_credentials_manager=get_credentials())
+        spotifynolog = True
+        user_info = {}
+        playlists = {}
+        playlists_info = {}
+    else:
+        sp = spotipy.Spotify(auth=token_info['access_token'])
+        spotifynolog = False
+        user_info = sp.current_user()
+        playlists = sp.current_user_playlists(limit=50)
+        playlists_info = playlists['items']
+    return render_template('home.html', user_info=user_info, playlists=playlists_info, username = current_user.username, salvati = salvati, spotifynolog = spotifynolog) #passo le info utente all'home.html 
 
 @home_bp.route('/playlist/<id>')
 def playlist(id):
+    if current_user.is_authenticated:
+        hologgato = True
+    else:
+        hologgato = False
     token_info = session.get('token_info', None) #recupero token sissione (salvato prima)
     if not token_info:
         sp = spotipy.Spotify(client_credentials_manager=get_credentials())
     else:
         sp = spotipy.Spotify(auth=token_info['access_token'])
-    playlist = sp.playlist(playlist_id = id)
+    try:
+        playlist = sp.playlist(playlist_id = id)
+    except:
+        return(redirect(url_for('home.home')))
     tracks = sp.playlist_tracks(playlist_id=id)
-    return render_template('playlist.html', playlist = playlist, tracks = tracks, id= id, top_artists_chart = get_top_artists(sp, id), top_albums_chart = get_top_albums(sp, id), top_genres_chart = get_genre_chart(sp, id))
+    return render_template('playlist.html', playlist = playlist, tracks = tracks, id= id, top_artists_chart = get_top_artists(tracks), top_albums_chart = get_top_albums(tracks), 
+    top_genres_chart = get_genre_chart(sp, tracks), tracks_per_year_chart = get_tracks_per_year_chart(tracks), tracks_duration = get_tracks_duration(tracks), hologgato = hologgato,
+    tracks_popularity = get_tracks_popularity(tracks))
+    #except:
+     #   return(redirect(url_for('home.home')))
 
 @home_bp.route('/homenl')
 def homenl():
+    if current_user.is_authenticated:
+        return(redirect(url_for('home.home')))
     return render_template('homenl.html')
 
 @home_bp.route('/playlist/<id>/aggiungi')

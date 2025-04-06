@@ -139,18 +139,10 @@
   </style>
 </head>
 <body>
-  <h1>Benvenuto, {{ username }}</h1>
-  <a href="{{ url_for('auth.logout') }}" id="btn">Esci</a>
-  {% if spotifynolog %}
-  <a href="{{ url_for('auth.callback') }}">Entra con Spotify</a>
-  {% endif %}
-
-  {% if user_info['images'] %}
-    <img src="{{ user_info['images'][0]['url'] }}" alt="Profile Image" />
-  {% endif %}
+  <h1>Compare di {{ playlist['name'] }}</h1>
 
   <div class="search-container">
-    <form action="/cerca" method="post" class="d-flex">
+    <form action="/compare/{{ playlist['id'] }}/cerca" method="post" class="d-flex">
       <input type="text" name="cerca" placeholder="Cerca" required />
       <button type="submit">Cerca</button>
     </form>
@@ -179,7 +171,7 @@
                 <span>Nessuna</span>
               {% endif %}
             </td>
-            <td><a href="/playlist/{{ p['id'] }}">Visualizza</a></td>
+            <td><a href="/comparison/{{ playlist['id'] }}/{{ p['id'] }}">Compara</a></td>
           </tr>
         {% endfor %}
       </tbody>
@@ -194,14 +186,12 @@
       <thead>
         <tr>
           <th>Nome Playlist</th>
-          <th>Azioni</th>
         </tr>
       </thead>
       <tbody>
         {% for elemento in salvati %}
           <tr>
-            <td><a href="/playlist/{{ elemento.elemento }}">{{ elemento.nome }}</a></td>
-            <td><a href="/rimuovi/{{ elemento.id }}">Rimuovi</a></td>
+            <td><a href="/comparison/{{ playlist['id'] }}/{{ elemento.elemento }}">{{ elemento.nome }}</a></td>
           </tr>
         {% endfor %}
       </tbody>
