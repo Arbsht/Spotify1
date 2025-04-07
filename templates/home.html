@@ -142,7 +142,7 @@
   <h1>Benvenuto, {{ username }}</h1>
   <a href="{{ url_for('auth.logout') }}" id="btn">Esci</a>
   {% if spotifynolog %}
-  <a href="{{ url_for('auth.callback') }}">Entra con Spotify</a>
+  <a href ="{{ url_for('auth.callback') }}">Entra con Spotify</a>
   {% endif %}
 
   {% if user_info['images'] %}
