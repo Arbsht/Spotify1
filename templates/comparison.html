@@ -8,34 +8,50 @@
 <body>
     <h1>Confronto Playlist</h1>
 
-    <h2>Playlist 1: {{ playlist1['name'] }}</h2>
-    <p><strong>Descrizione:</strong> {{ playlist1['description'] }}</p>
-    <p><strong>Numero di tracce:</strong> {{ playlist1['tracks']['total'] }}</p>
+    {% if playlist1 and playlist2 %}
+        <h2>Playlist 1: {{ playlist1['name'] }}</h2>
+        <p><strong>Descrizione:</strong> {{ playlist1['description'] }}</p>
+        <p><strong>Numero di tracce:</strong> {{ playlist1['tracks']['total'] }}</p>
 
-    <h2>Playlist 2: {{ playlist2['name'] }}</h2>
-    <p><strong>Descrizione:</strong> {{ playlist2['description'] }}</p>
-    <p><strong>Numero di tracce:</strong> {{ playlist2['tracks']['total'] }}</p>
+        <h2>Playlist 2: {{ playlist2['name'] }}</h2>
+        <p><strong>Descrizione:</strong> {{ playlist2['description'] }}</p>
+        <p><strong>Numero di tracce:</strong> {{ playlist2['tracks']['total'] }}</p>
 
-    <h3>Tracce comuni:</h3>
-    <ul>
-        {% for track in playlist1['tracks']['items'] %}
-            <li>{{ track['track']['name'] }}</li>
-        {% endfor %}
-    </ul>
+        <h3>Tracce comuni:</h3>
+        <ul>
+            {% set playlist1_tracks = [] %}
+            {% for track in playlist1['tracks']['items'] %}
+                {% set _ = playlist1_tracks.append(track['track']['name']) %}
+            {% endfor %}
+            
+            {% set playlist2_tracks = [] %}
+            {% for track in playlist2['tracks']['items'] %}
+                {% set _ = playlist2_tracks.append(track['track']['name']) %}
+            {% endfor %}
+            
+            {% for track in playlist1_tracks %}
+                {% if track in playlist2_tracks %}
+                    <li>{{ track }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
 
-    <h3>Tracce Playlist 1:</h3>
-    <ul>
-        {% for track in playlist1['tracks']['items'] %}
-            <li>{{ track['track']['name'] }}</li>
-        {% endfor %}
-    </ul>
+        <h3>Tracce Playlist 1:</h3>
+        <ul>
+            {% for track in playlist1['tracks']['items'] %}
+                <li>{{ track['track']['name'] }}</li>
+            {% endfor %}
+        </ul>
 
-    <h3>Tracce Playlist 2:</h3>
-    <ul>
-        {% for track in playlist2['tracks']['items'] %}
-            <li>{{ track['track']['name'] }}</li>
-        {% endfor %}
-    </ul>
+        <h3>Tracce Playlist 2:</h3>
+        <ul>
+            {% for track in playlist2['tracks']['items'] %}
+                <li>{{ track['track']['name'] }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Una delle playlist non è stata trovata o ci sono stati problemi nel recuperare i dati.</p>
+    {% endif %}
 
 </body>
 </html>
