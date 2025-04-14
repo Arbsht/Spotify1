@@ -1,238 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAMK</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAMK</title>
 
-    <link rel="stylesheet" href="static/css/style.css">
-    <style>
-        body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: #121212;
-            color: white;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-            animation: fadeInBody 1.5s ease;
-        }
+  <link rel="stylesheet" href="static/css/style.css" />
 
-        @keyframes fadeInBody {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+  <style>
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      color: white;
+      animation: fadeInBody 1.5s ease;
 
-        .logo {
-            font-size: 2.5rem;
-            color: #1db954;
-            font-weight: 800;
-            letter-spacing: 6px;
-            margin-bottom: 10px;
-            animation: popIn 1s ease;
-        }
+      /* Sfondo animato */
+      background: linear-gradient(-45deg, #1DB954, #121212, #1DB954, #121212);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite, fadeInBody 1.5s ease;
+    }
 
-        @keyframes popIn {
-            0% {
-                transform: scale(0.6);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-        h1 {
-            color: #1DB954;
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-            animation: fadeInTitle 1.5s ease;
-        }
+    @keyframes fadeInBody {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-        @keyframes fadeInTitle {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .logo {
+      font-size: 2.5rem;
+      color: #1db954;
+      font-weight: 800;
+      letter-spacing: 6px;
+      margin-bottom: 10px;
+      animation: popIn 1s ease;
+    }
 
-        img {
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-            max-width: 100%;
-            animation: fadeInImg 1s ease;
-        }
+    @keyframes popIn {
+      0% { transform: scale(0.6); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
 
-        @keyframes fadeInImg {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
+    h1 {
+      color: #1DB954;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+      animation: fadeInTitle 1.5s ease;
+    }
 
-        .links-container, .links-inline {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-            animation: fadeInLinks 1.5s ease;
-        }
+    @keyframes fadeInTitle {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .links-inline a, .links-container a {
-            text-decoration: none;
-            color: white;
-            font-size: 1.1rem;
-            padding: 10px 20px;
-            border-radius: 25px;
-            border: 2px solid #1DB954;
-            background-color: #1DB954;
-            transition: all 0.3s ease;
-        }
+    img {
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+      max-width: 100%;
+      animation: fadeInImg 1s ease;
+    }
 
-        .links-inline a:hover, .links-container a:hover {
-            background-color: #1ed760;
-            border-color: #1ed760;
-            transform: scale(1.05);
-        }
+    @keyframes fadeInImg {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
 
-        table {
-            width: 90%;
-            max-width: 1000px;
-            margin: 30px auto;
-            border-collapse: collapse;
-            background-color: #1e1e1e;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            animation: fadeInTable 1.2s ease;
-        }
+    .links-container, .links-inline {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      animation: fadeInLinks 1.5s ease;
+    }
 
-        th, td {
-            padding: 16px;
-            color: white;
-        }
+    .links-inline a, .links-container a {
+      text-decoration: none;
+      color: white;
+      font-size: 1.1rem;
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: 2px solid #1DB954;
+      background-color: #1DB954;
+      transition: all 0.3s ease;
+    }
 
-        th {
-            background-color: #1DB954;
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
+    .links-inline a:hover, .links-container a:hover {
+      background-color: #1ed760;
+      border-color: #1ed760;
+      transform: scale(1.05);
+    }
 
-        td {
-            background-color: #292929;
-            font-size: 1rem;
-        }
+    table {
+      width: 90%;
+      max-width: 1000px;
+      margin: 30px auto;
+      border-collapse: collapse;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      animation: fadeInTable 1.2s ease;
+    }
 
-        tr:hover {
-            background-color: #3a3a3a;
-        }
+    th, td {
+      padding: 16px;
+      color: white;
+    }
 
-        @keyframes fadeInTable {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    th {
+      background-color: #1DB954;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
 
-     
-        .chart-section {
-            margin-top: 40px;
-            animation: fadeInChart 1.3s ease;
-        }
+    td {
+      background-color: #292929;
+      font-size: 1rem;
+    }
 
-        @keyframes fadeInChart {
-            from {
-                opacity: 0;
-                transform: scale(0.98);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-    </style>
+    tr:hover {
+      background-color: #3a3a3a;
+    }
+
+    @keyframes fadeInTable {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chart-section {
+      margin-top: 40px;
+      animation: fadeInChart 1.3s ease;
+    }
+
+    @keyframes fadeInChart {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
 </head>
 <body id="body">
 
-    <div class="logo">GAMK</div>
-    
-    <h1>{{ playlist['name'] }}</h1>
-    
-    <img src="{{ playlist['images'][0]['url'] }}" alt="Jacket playlist" height="100"><br>
-    
-    <div class="links-inline">
-        <a href="/playlist/{{ id }}/random">🎵 Prendi una canzone a caso</a>
-        {% if hologgato %}
-        <a href="/playlist/{{ id }}/aggiungi">➕ Aggiungi playlist alla lista locale</a>
-        {% endif %}
-        <a href="{{ url_for('home.home') }}">🏠 Ritorna alla home</a>
-        <a href="/compare/{{id}}">Compara questa playlist</a>
-    </div>
+  <div class="logo">GAMK</div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Titolo</th>
-                <th>Artista</th>
-                <th>Album</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for t in tracks['items'] %}
-            <tr>
-                <td style="width: 40ch;">{{ t['track']['name'] }}</td>
-                <td style="width: 40ch;">
-                    {% for a in t['track']['artists'] %}
-                    {{a['name']}}{% if not loop.last %}, {% endif %}
-                    {% endfor %}
-                </td>
-                <td style="width: 40ch;">{{ t['track']['album']['name']}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+  <h1>{{ playlist['name'] }}</h1>
 
-    <div class="chart-section">
-        <h1>Top 5 Artisti più presenti</h1>
-        <div>{{ top_artists_chart | safe }}</div>
-    </div>
+  <img src="{{ playlist['images'][0]['url'] }}" alt="Jacket playlist" height="100"><br>
 
-    <div class="chart-section">
-        <h1>Top 5 Album più presenti</h1>
-        <div>{{ top_albums_chart | safe }}</div>
-    </div>
+  <div class="links-inline">
+    <a href="/playlist/{{ id }}/random">🎵 Prendi una canzone a caso</a>
+    {% if hologgato %}
+    <a href="/playlist/{{ id }}/aggiungi">➕ Aggiungi playlist alla lista locale</a>
+    {% endif %}
+    <a href="{{ url_for('home.home') }}">🏠 Ritorna alla home</a>
+    <a href="/compare/{{id}}">Compara questa playlist</a>
+  </div>
 
-    <div class="chart-section">
-        <h1>Generi più presenti</h1>
-        <div>{{ top_genres_chart | safe }}</div>
-    </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Titolo</th>
+        <th>Artista</th>
+        <th>Album</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in tracks['items'] %}
+      <tr>
+        <td style="width: 40ch;">{{ t['track']['name'] }}</td>
+        <td style="width: 40ch;">
+          {% for a in t['track']['artists'] %}
+          {{a['name']}}{% if not loop.last %}, {% endif %}
+          {% endfor %}
+        </td>
+        <td style="width: 40ch;">{{ t['track']['album']['name']}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
-    <div class="chart-section">
-        <h1>Distribuzione temporale dei brani</h1>
-        <div> {{ tracks_per_year_chart | safe }}</div>
-       
-    </div>
+  <div class="chart-section">
+    <h1>Top 5 Artisti più presenti</h1>
+    <div>{{ top_artists_chart | safe }}</div>
+  </div>
 
-    <div class="chart-section">
-        <h1>Distribuzione della durata dei brani</h1>
-        <div> {{ tracks_duration | safe }}</div>
-       
-    </div>
+  <div class="chart-section">
+    <h1>Top 5 Album più presenti</h1>
+    <div>{{ top_albums_chart | safe }}</div>
+  </div>
 
-    <div class="chart-section">
-        <h1>Distribuzione della popolarità dei brani</h1>
-        <div> {{ tracks_popularity | safe }}</div>
-       
-    </div>
+  <div class="chart-section">
+    <h1>Generi più presenti</h1>
+    <div>{{ top_genres_chart | safe }}</div>
+  </div>
+
+  <div class="chart-section">
+    <h1>Distribuzione temporale dei brani</h1>
+    <div>{{ tracks_per_year_chart | safe }}</div>
+  </div>
+
+  <div class="chart-section">
+    <h1>Distribuzione della durata dei brani</h1>
+    <div>{{ tracks_duration | safe }}</div>
+  </div>
+
+  <div class="chart-section">
+    <h1>Distribuzione della popolarità dei brani</h1>
+    <div>{{ tracks_popularity | safe }}</div>
+  </div>
 
 </body>
 </html>
