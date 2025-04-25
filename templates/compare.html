@@ -136,9 +136,29 @@
       from { transform: translateY(20px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+      .search-container input {
+        width: 200px;
+      }
+      .search-container button {
+        font-size: 14px;
+        padding: 8px 15px;
+      }
+      table {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
+
   <h1>Compare di {{ playlist['name'] }}</h1>
 
   <div class="search-container">
@@ -197,5 +217,6 @@
       </tbody>
     </table>
   {% endif %}
+
 </body>
 </html>

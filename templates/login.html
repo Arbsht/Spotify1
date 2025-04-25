@@ -7,11 +7,26 @@
     
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* Sfondo con gradiente animato nero-verde */
         body {
-            background-color: #121212;
+            background: linear-gradient(-45deg, #000000, #1db954, #000000, #1db954);
+            background-size: 400% 400%;
+            animation: animatedGradient 10s ease infinite;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             color: #fff;
             overflow-x: hidden;
+        }
+
+        @keyframes animatedGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .login-container {
@@ -132,7 +147,6 @@
         <a href="{{ url_for('auth.annullalogin') }}">Annulla il login</a>
     </div>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.0/dist/umd/popper.min.js"></script>
