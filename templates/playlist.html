@@ -82,7 +82,7 @@
       animation: fadeInLinks 1.5s ease;
     }
 
-    .links-inline a, .links-container a {
+    .links-inline a, .links-container a, button {
       text-decoration: none;
       color: white;
       font-size: 1.1rem;
@@ -93,7 +93,7 @@
       transition: all 0.3s ease;
     }
 
-    .links-inline a:hover, .links-container a:hover {
+    .links-inline a:hover, .links-container a:hover, button:hover {
       background-color: #1ed760;
       border-color: #1ed760;
       transform: scale(1.05);
@@ -146,8 +146,17 @@
       to { opacity: 1; transform: scale(1); }
     }
   </style>
+  <script>
+    function copialink() {
+  var linkPlaylist = document.getElementById("linkPlaylist");
+  linkPlaylist.select();
+  linkPlaylist.setSelectionRange(0, 99999);
+  navigator.clipboard.writeText(linkPlaylist.value);
+}
+  </script>
 </head>
 <body id="body">
+  <input type="text" id="linkPlaylist" value="{{ playlist['external_urls']['spotify'] }}" style="height: 0; width: 0; opacity: 0;">
 
   <div class="logo">GAMK</div>
 
@@ -162,6 +171,7 @@
     {% endif %}
     <a href="{{ url_for('home.home') }}">🏠 Ritorna alla home</a>
     <a href="/compare/{{id}}">Compara questa playlist</a>
+    <button onclick="copialink()">Copia link playlist</button>
   </div>
 
   <table>

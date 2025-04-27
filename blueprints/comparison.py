@@ -44,7 +44,8 @@ def comparison(id1, id2):
 
     if not token_info:
         sp = spotipy.Spotify(client_credentials_manager=get_credentials())
-        return redirect('/')
+        playlist1 = sp.playlist(playlist_id=id1)
+        playlist2 = sp.playlist(playlist_id=id2)
     else:
         sp = spotipy.Spotify(auth=token_info['access_token'])
         playlist1 = sp.playlist(playlist_id=id1)
