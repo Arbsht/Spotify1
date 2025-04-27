@@ -8,15 +8,23 @@
   <style>
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #121212;
+      background: linear-gradient(-45deg, #000000, #1db954, #000000, #1db954);
+      background-size: 400% 400%;
+      animation: animatedGradient 10s ease infinite;
       color: white;
       padding: 30px 15px;
       text-align: center;
     }
 
+    @keyframes animatedGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     h1 {
       font-size: 2.8rem;
-      color: #1DB954;
+      color: #ffffff;
       animation: fadeIn 1.2s ease-in-out;
       margin-bottom: 10px;
     }
